@@ -1,5 +1,4 @@
 package ru.clevertec;
-import ru.clevertec.StringUtils.*;
 
 public class Utils {
     private Utils(){}

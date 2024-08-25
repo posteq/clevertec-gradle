@@ -32,7 +32,7 @@ jar{
     }
 }
 
-task copyAllDependencies(type : Copy){
+tasks.register('copyAllDependencies', Copy) {
     from(configurations.runtimeClasspath.files)
     into("$buildDir/libs/lib")
 }
