@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
+group = 'ru.clevertec'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation files('../libs/gradle-homework-1.0.jar')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+test.finalizedBy(jacocoTestReport)
+jacocoTestReport.dependsOn test
+
+jar{
+    def jars = configurations.runtimeClasspath.files.collect{"lib/$it.name"}
+    manifest {
+        attributes 'Implementation-Title' : project.name,
+                'Implementation-version' : version,
+                'Class-Path' : jars.join(' ')
+    }
+}
+
+task copyAllDependencies(type : Copy){
+    from(configurations.runtimeClasspath.files)
+    into("$buildDir/libs/lib")
+}
+jar.dependsOn copyAllDependencies

@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'ru.clevertec'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar{
+    manifest {
+        attributes 'Implementation-Title' : project.name,
+                    'Implementation-version' : version
+    }
+}
+
